@@ -69,7 +69,9 @@ class CommandLibrary
     event << "Range: #{spell[:range]} | Casting Time: #{spell[:casting_time]}"
     event << "Duration: #{spell[:duration]} | Concentration: #{spell[:concentration]}"
     event << "======================================="
-    event << spell[:description]
+    spell[:description].each do |line|
+      event << line
+    end
     event << "======================================="
     event << spell[:higher_level] unless spell[:higher_level].nil?
   end
@@ -84,7 +86,7 @@ class CommandLibrary
       casting_time: payload["casting_time"] || default_value,
       duration: payload["duration"] || default_value,
       concentration: payload["concentration"] ? "Yes" : "No",
-      description: payload["desc"][0] || default_value,
+      description: payload["desc"] || default_value,
       higher_level: payload["higher_level"] ? payload["higher_level"][0] : nil
     }
   end
